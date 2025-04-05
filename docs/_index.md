@@ -4,7 +4,7 @@ date: 2023-01-01T01:01:01-08:00
 draft: true
 weight: 1
 ---
-{{<forkme url="https://github.com/go-swagger/go-swagger/fork">}}
+{{<forkme url="https://github.com/slashliv/go-swagger/fork">}}
 
 {{< hint "info" >}}
 {{< param goswagger.versionMessage >}}

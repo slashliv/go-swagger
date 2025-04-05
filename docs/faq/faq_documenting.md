@@ -5,7 +5,7 @@ draft: true
 ---
 <!-- Questions about the serve UI use-case -->
 ### Serving swagger-ui with the API Server
-Update: You can visit $API_BASE/docs and it should show the UI, as mentioned in [#comment](https://github.com/go-swagger/go-swagger/issues/2401#issuecomment-688962519) 
+Update: You can visit $API_BASE/docs and it should show the UI, as mentioned in [#comment](https://github.com/slashliv/go-swagger/issues/2401#issuecomment-688962519) 
 
 _Use-Case_: I was trying to serve swagger-ui from the generated API Server and
 I didn't find a straightforward enough way in the docs,
@@ -48,7 +48,7 @@ I'm reluctant to do so at this point in time because a git submodule break go-ge
 >On top of it is a lot of javascript and html files and people haven't been over the moon when go-swagger gets
 >vendored and they see all of that.
 
-Originally from issue [#370](https://github.com/go-swagger/go-swagger/issues/370).
+Originally from issue [#370](https://github.com/slashliv/go-swagger/issues/370).
 
 See also: How to serve Swagger UI from a preexisting web app? [#1029](https://github.com/go-swagger/go-swagger/issues/1029).
 

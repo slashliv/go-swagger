@@ -78,6 +78,9 @@ type BookingResponse struct {
 //
 // Responses:
 // 200: BookingResponse
+//
+// Extensions:
+// x-sort-order: 3
 func bookings(w http.ResponseWriter, r *http.Request) {
 
 }

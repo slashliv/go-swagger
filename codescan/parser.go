@@ -1555,6 +1555,30 @@ func (stack *extensionParsingStack) walkBack(rawLines []string, lineIndex int) {
 	}
 }
 
+func parseExtensionValue(value string) interface{} {
+	value = strings.TrimSpace(value)
+
+	// Пробуем преобразовать в целое число
+	if intVal, err := strconv.Atoi(value); err == nil {
+		return intVal
+	}
+
+	if floatVal, err := strconv.ParseFloat(value, 64); err == nil {
+		return floatVal
+	}
+
+	// Пробуем преобразовать в булево значение
+	switch strings.ToLower(value) {
+	case "true", "yes", "on":
+		return true
+	case "false", "no", "off":
+		return false
+	}
+
+	// Возвращаем как строку (по умолчанию)
+	return value
+}
+
 // Recursively parses through the given extension lines, building and adding extension objects as it goes.
 // Extensions may be key:value pairs, arrays, or objects.
 func buildExtensionObjects(rawLines []string, cleanLines []string, lineIndex int, extObjs *[]extensionObject, stack *extensionParsingStack) {
@@ -1596,8 +1620,8 @@ func buildExtensionObjects(rawLines []string, cleanLines []string, lineIndex int
 					Extension: key,
 				}
 				// Extension is simple key:value pair, no stack
-				ext.Root = make(map[string]string)
-				ext.Root.(map[string]string)[key] = value
+				ext.Root = make(map[string]interface{})
+				ext.Root.(map[string]interface{})[key] = parseExtensionValue(value)
 				*extObjs = append(*extObjs, ext)
 				buildExtensionObjects(rawLines, cleanLines, lineIndex+1, extObjs, nil)
 			} else {
@@ -1640,7 +1664,7 @@ func buildExtensionObjects(rawLines []string, cleanLines []string, lineIndex int
 			} else {
 				// key:value
 				if reflect.TypeOf((*stack)[stackIndex]).Kind() == reflect.Map {
-					(*stack)[stackIndex].(map[string]interface{})[key] = value
+					(*stack)[stackIndex].(map[string]interface{})[key] = parseExtensionValue(value)
 				}
 				if lineIndex < len(rawLines)-1 && !rxAllowedExtensions.MatchString(cleanLines[lineIndex+1]) {
 					stack.walkBack(rawLines, lineIndex)

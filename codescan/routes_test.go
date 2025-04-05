@@ -30,7 +30,8 @@ func TestRoutesParser(t *testing.T) {
 
 	po, ok := ops.Paths["/pets"]
 	ext := make(spec.Extensions)
-	ext.Add("x-some-flag", "true")
+	ext.Add("x-some-flag", true)
+	ext.Add("x-some-int", 4)
 	assert.True(t, ok)
 	assert.NotNil(t, po.Get)
 	assertOperation(t,
@@ -54,7 +55,7 @@ func TestRoutesParser(t *testing.T) {
 
 	po, ok = ops.Paths["/orders"]
 	ext = make(spec.Extensions)
-	ext.Add("x-some-flag", "false")
+	ext.Add("x-some-flag", false)
 	ext.Add("x-some-list", []string{"item1", "item2", "item3"})
 	ext.Add("x-some-object", map[string]interface{}{
 		"key1": "value1",
